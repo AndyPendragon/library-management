@@ -110,6 +110,26 @@ paths:
       responses:
         204:
           description: Author successfully deleted
+  /books/{bookId}/authors/{authorId}:
+    put:
+      summary: Update the author of a book
+      operationId: updateBookAuthor
+      parameters:
+        - in: path
+          name: bookId
+          description: The ID of the book to update
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: authorId
+          description: The ID of the new author for the book
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Author of the book updated successfully
 components:
   schemas:
     Book:
