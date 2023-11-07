@@ -130,6 +130,20 @@ paths:
       responses:
         200:
           description: Author of the book updated successfully
+  /books/authors:
+    put:
+      summary: Update book-author relationships
+      operationId: updateBookAuthorRelationships
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBookAuthor'
+      responses:
+        200:
+          description: Book-author relationships updated successfully
 components:
   schemas:
     Book:
@@ -166,3 +180,13 @@ components:
           enum:
             - M
             - F
+    UpdateBookAuthor:
+      type: object
+      properties:
+        bookId:
+          type: string
+        authorId: 
+          type: string
+      required:
+        - "bookId"
+        - "authorId"
