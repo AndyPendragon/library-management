@@ -192,6 +192,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/CrupdateBook'
         - $ref: '#/components/schemas/Author'
+        - $ref: '#/components/schemas/Topic'
     CrupdateBook:
       type: object
       properties:
@@ -201,12 +202,6 @@ components:
           type: string
         pageNumbers:
           type: integer
-        topic:
-          type: string
-          enum:
-            - ROMANCE
-            - COMEDY
-            - OTHER
         releaseDate:
           type: string
           format: date
@@ -232,3 +227,9 @@ components:
       required:
         - "bookId"
         - "authorId"
+    Topic:
+      type: string
+      enum:
+        - ROMANCE
+        - COMEDY
+        - OTHER
