@@ -258,23 +258,23 @@ components:
     CrupdateBook:
       type: object
       properties:
-        id:
+        bookId:
           type: string
         bookName:
           type: string
-        pageNumbers:
+        bookPageNumbers:
           type: integer
-        releaseDate:
+        bookReleaseDate:
           type: string
           format: date
     Author:
       type: object
       properties:
-        id:
+        authorId:
           type: string
-        name:
+        authorName:
           type: string
-        sex:
+        authorSex:
           allOf:
             - $ref: '#/components/schemas/Sex'
     Sex:
@@ -293,11 +293,14 @@ components:
         - "bookId"
         - "authorId"
     Topic:
-      type: string
-      enum:
-        - ROMANCE
-        - COMEDY
-        - OTHER
+      type: object
+      properties:
+        topicName:
+          type: string
+          enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
     AuthorTopics:
       type: object
       allOf:
@@ -306,4 +309,5 @@ components:
         topic:
           type: array
           items:
-            $ref: '#/components/schemas/Topic'
+            allOf:
+              - $ref: '#/components/schemas/Topic'
