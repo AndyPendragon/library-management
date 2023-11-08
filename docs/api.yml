@@ -144,6 +144,25 @@ paths:
       responses:
         200:
           description: Author of the book updated successfully
+  /books/{bookID}/topic:
+    put:
+      summary: Assign a topic to a book
+      operationId: assignTopicToBook
+      parameters:
+        - in: path
+          name: bookId
+          description: The ID of the book to assign a topic to
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic' 
+      responses:
+        200:
+          description: Topic assigned to the book successfully
   /books/authors:
     put:
       summary: Update book-author relationships
