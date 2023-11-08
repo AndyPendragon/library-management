@@ -185,14 +185,14 @@ paths:
         - in: path
           name: page
           description: Page number for pagination
-          required: false
+          required: true
           schema:
             type: integer
             default: 1
         - in: path
           name: pageSize
           description: Number of authors per page
-          required: false
+          required: true
           schema:
             type: integer
             default: 50
