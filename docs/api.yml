@@ -274,10 +274,13 @@ components:
         name:
           type: string
         sex:
-          type: string
-          enum:
-            - M
-            - F
+          allOf:
+            - $ref: '#/components/schemas/Sex'
+    Sex:
+      type: string
+      enum:
+        - M
+        - F
     UpdateBookAuthor:
       type: object
       properties:
