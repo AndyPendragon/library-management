@@ -279,13 +279,10 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/ImportBook'
+              $ref: '#/components/schemas/ImportBookJson'
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              type: string
-              format: binary
+              $ref: '#/components/schemas/ImportBookExcel'
       responses:
         200:
           description: List of imported books
@@ -544,8 +541,12 @@ components:
       required:
         - authorName
         - sex
-
     ImportBook:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/ImportBookJson'
+        - $ref: '#/components/schemas/ImportBookExcel'
+    ImportBookJson:
       type: object
       properties:
         bookName:
@@ -568,3 +569,13 @@ components:
         - topic
         - releaseDate
         - idAuthor
+    ImportBookExcel:
+      type: object
+      properties:
+        excelProp1:
+          type: string
+        excelProp2:
+          type: integer
+      required:
+        - excelProp1
+        - excelProp2
