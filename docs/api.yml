@@ -41,9 +41,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/ApiResponse200Books'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse403'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
     put:
       summary: Create or update a list of books
       operationId: crupdateBooks
@@ -77,13 +93,29 @@ paths:
             type: string
       responses:
         200:
-          description: The list of authors
+          description: The list of filtered authors
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/ApiResponse200Authors'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse403'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
     put:
       summary: Create or update an author
       operationId: crupdateAuthor
@@ -202,13 +234,29 @@ paths:
             default: 50
       responses:
         200:
-          description: List of topics with pagination
+          description: The list of filtered topics
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Topic'
+                $ref: '#/components/schemas/ApiResponse200Topics'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse403'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
   /authorsTopics:
     get:
       summary: Get all authorTopics
@@ -320,3 +368,85 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/Topic'
+    BaseApiResponseModel:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        body:
+          type: object
+    BaseApiResponse200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status200'
+        body:
+          type: array  # Tu peux ajuster le type selon tes besoins
+    Status200:
+      type: object
+      properties:
+        code:
+          enum: [200]
+        message:
+          enum: ['OK']
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    ApiResponse200Books:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse200'
+        - properties:
+            body:
+              items:
+                $ref: '#/components/schemas/Book'
+
+    ApiResponse200Authors:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse200'
+        - properties:
+            body:
+              items:
+                $ref: '#/components/schemas/Author'
+
+    ApiResponse200Topics:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponse200'
+        - properties:
+            body:
+              items:
+                $ref: '#/components/schemas/Topic'
+    ApiResponse400:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponseModel'
+        - properties:
+            status:
+              properties:
+                code:
+                  enum: [400]
+                message:
+                  enum: ['Bad Request']
+    ApiResponse403:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponseModel'
+        - properties:
+            status:
+              properties:
+                code:
+                  enum: [403]
+                message:
+                  enum: ['Forbidden']
+
+    ApiResponse500:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponseModel'
+        - properties:
+            status:
+              properties:
+                code:
+                  enum: [500]
+                message:
+                  enum: ['Internal Server Error']
