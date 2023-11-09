@@ -271,6 +271,90 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AuthorTopics'
+  /books/import:
+    post:
+      summary: Import books
+      operationId: importBooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportBook'
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          description: List of imported books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse403'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+  /authors/import:
+    post:
+      summary: Import authors
+      operationId: importAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportAuthor'
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          description: List of imported authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse403'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
 components:
   parameters:
     queryPage:
@@ -450,3 +534,37 @@ components:
                   enum: [500]
                 message:
                   enum: ['Internal Server Error']
+    ImportAuthor:
+      type: object
+      properties:
+        authorName:
+          type: string
+        sex:
+          $ref: '#/components/schemas/Sex'
+      required:
+        - authorName
+        - sex
+
+    ImportBook:
+      type: object
+      properties:
+        bookName:
+          type: string
+        author:
+          type: string
+        pageNumbers:
+          type: integer
+        topic:
+          $ref: '#/components/schemas/Topic'
+        releaseDate:
+          type: string
+          format: date
+        idAuthor:
+          type: string
+      required:
+        - bookName
+        - author
+        - pageNumbers
+        - topic
+        - releaseDate
+        - idAuthor
