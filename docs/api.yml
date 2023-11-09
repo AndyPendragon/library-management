@@ -318,13 +318,10 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/ImportAuthor'
+              $ref: '#/components/schemas/ImportAuthorJson'
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              type: string
-              format: binary
+              $ref: '#/components/schemas/ImportAuthorExcel'
       responses:
         200:
           description: List of imported authors
@@ -533,6 +530,11 @@ components:
                   enum: ['Internal Server Error']
     ImportAuthor:
       type: object
+      oneOf:
+        - $ref: '#/components/schemas/ImportAuthorJson'
+        - $ref: '#/components/schemas/ImportAuthorExcel'
+    ImportAuthorJson:
+      type: object
       properties:
         authorName:
           type: string
@@ -541,6 +543,16 @@ components:
       required:
         - authorName
         - sex
+    ImportAuthorExcel:
+      type: object
+      properties:
+        excelProp1:
+          type: string
+        excelProp2:
+          type: integer
+      required:
+        - excelProp1
+        - excelProp2
     ImportBook:
       type: object
       oneOf:
