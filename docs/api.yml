@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.0.1
+  version: 1.2.0
   description: STD22028
 servers:
   - url: https://library.com
@@ -33,20 +33,8 @@ paths:
           schema:
             type: string
             format: date
-        - in: query
-          name: page
-          description: Page number for pagination
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - in: query
-          name: pageSize
-          description: Number of items per page
-          required: false
-          schema:
-            type: integer
-            default: 50
+        - $ref: '#/components/parameters/queryPage'
+        - $ref: '#/components/parameters/queryPageSize'
       responses:
         200:
           description: The list of filtered books
@@ -182,20 +170,8 @@ paths:
       summary: Get paginated list of authors
       operationId: getAuthors
       parameters:
-        - in: path
-          name: page
-          description: Page number for pagination
-          required: true
-          schema:
-            type: integer
-            default: 1
-        - in: path
-          name: pageSize
-          description: Number of authors per page
-          required: true
-          schema:
-            type: integer
-            default: 50
+        - $ref: '#/components/parameters/pathPage'
+        - $ref: '#/components/parameters/pathPageSize'
       responses:
         200:
           description: List of authors with pagination
@@ -248,6 +224,39 @@ paths:
                 items:
                   $ref: '#/components/schemas/AuthorTopics'
 components:
+  parameters:
+    queryPage:
+      name: page
+      in: query
+      description: Page number for pagination
+      required: false
+      schema:
+        type: integer
+        default: 1
+    queryPageSize:
+      name: pageSize
+      in: query
+      description: Number of items per page
+      required: false
+      schema:
+        type: integer
+        default: 50
+    pathPage:
+      name: page
+      in: path
+      description: Page number for pagination
+      required: true
+      schema:
+        type: integer
+        default: 1
+    pathPageSize:
+      name: pageSize
+      in: path
+      description: Number of authors per page
+      required: true
+      schema:
+        type: integer
+        default: 50
   schemas:
     Book:
       type: object
